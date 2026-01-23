@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gov-blue: #1e3a8a;
+  --color-gov-blue-dark: #172554;
+  --color-gov-blue-light: #3b82f6;
+  --color-bg-light: #f3f4f6;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #4b5563;
+  --color-accent-cyan: #06b6d4;
+}
+
+:root {
+  --gov-blue: #1e3a8a;
+  --gov-blue-dark: #172554;
+  --bg-light: #f3f4f6;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-light);
+  color: #1f2937;
+}
+
+/* Custom Utilities if needed, but Tailwind handles most */
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
