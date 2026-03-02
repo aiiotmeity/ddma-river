@@ -11,19 +11,21 @@ const Login = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Simulate simple auth
-        if (role === 'authority' && username === 'admin' && password === 'admin123') {
+
+        // Role-based authentication with proper credential validation
+        if (role === 'authority' && username === 'damadmin' && password === 'admin123') {
+            navigate('/bhoothankett-dashboard');
+        } else if (role === 'authority' && username === 'admin' && password === 'admin123') {
+            // Additional admin credential for demo purposes
             navigate('/bhoothankett-dashboard');
         } else if (role === 'research' && username === 'research' && password === 'res123') {
             alert("Redirecting to Research Portal... (Page not implemented yet, using Dam Dashboard for demo)");
             navigate('/bhoothankett-dashboard');
         } else if (role === 'ddma' && username === 'ddma' && password === 'ddma123') {
-            alert("Redirecting to DDMA Portal... (Page not implemented yet, using Dam Dashboard for demo)");
             navigate('/ddma-dashboard');
         } else {
-            // Fallback for demo ease - allows empty pass or generic entry if user gets stuck
-            if (username === 'admin') navigate('/bhoothankett-dashboard');
-            else alert('Invalid Credentials. Try: admin/admin123');
+            // Show helpful error message with correct credentials
+            alert('Invalid Credentials!\n\nValid credentials:\n• Dam Authority: admin / admin123\n• DDMA: ddma / ddma123');
         }
     };
 
@@ -76,9 +78,9 @@ const Login = () => {
                                     onChange={(e) => setRole(e.target.value)}
                                 >
                                     <option value="authority">Dam Authority / Official</option>
-                                    <option value="research">Research / Academic</option>
+                                    {/* <option value="research">Research / Academic</option> */}
                                     <option value="ddma">DDMA / Disaster Mgmt</option>
-                                    <option value="admin">System Administrator</option>
+                                    {/* <option value="admin">System Administrator</option> */}
                                 </select>
                             </div>
 

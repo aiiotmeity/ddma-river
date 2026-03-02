@@ -10,16 +10,16 @@ const Footer = () => {
                     <div className="md:col-span-2">
                         <div className="flex items-start gap-4 mb-4">
                             <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg"
-                                alt="Government of India Emblem"
-                                className="h-16 w-16 brightness-0 invert"
+                            src="/logo.png"
+                            alt="Center for AI-IoT Innovation"
+                            className="h-14 w-15 md:h-20 md:w-20 object-cover rounded-full"
                             />
                             <div>
-                                <h4 className="font-bold text-lg mb-1">Adi Shankara Institute of Engineering & Technology</h4>
-                                <p className="text-sm opacity-80 mb-2">Supported by Ministry of Earth Sciences</p>
+                                <h4 className="font-bold text-lg mb-1">Center for AI-IOT Innovation</h4>
+                                <p className="text-sm opacity-80 mb-2">Supported by Ministry of Electronics and Information Technology</p>
+                                <p className="text-sm opacity-80 mb-2">Adi Shankara Institute of Engineering & Technology</p>
                                 <p className="text-xs opacity-70 leading-relaxed">
-                                    A Government of India initiative for advanced research in Environmental Sciences,
-                                    Weather Monitoring & Disaster Management.
+                                    Development of digital networking for preventive and predictive Environmental and climatic warning solutions -building an entrepreneurial ecosystem or addressing Environmental issues
                                 </p>
                             </div>
                         </div>
@@ -47,7 +47,7 @@ const Footer = () => {
                     <div>
                         <h5 className="font-bold text-sm uppercase tracking-wider mb-4 border-b border-blue-700 pb-2">Important Links</h5>
                         <ul className="space-y-2 text-sm opacity-80">
-                            <li><a href="#" className="hover:text-white hover:underline transition-colors">Ministry of Earth Sciences</a></li>
+
                             <li><a href="#" className="hover:text-white hover:underline transition-colors">India Meteorological Dept</a></li>
                             <li><a href="#" className="hover:text-white hover:underline transition-colors">Central Water Commission</a></li>
                             <li><a href="#" className="hover:text-white hover:underline transition-colors">NDMA</a></li>
@@ -64,7 +64,7 @@ const Footer = () => {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
                         <div className="opacity-70">
                             <p>© 2025 Adi Shankara Institute of Engineering & Technology. All Rights Reserved.</p>
-                            <p className="mt-1">Government-aligned Research System | Accredited by NAAC with 'A' Grade</p>
+
                         </div>
                         <div className="flex gap-6 opacity-80">
                             <a href="#" className="hover:text-white hover:underline transition-colors">Contact Us</a>
