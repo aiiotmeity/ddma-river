@@ -10,9 +10,9 @@ const Footer = () => {
                     <div className="md:col-span-2">
                         <div className="flex items-start gap-4 mb-4">
                             <img
-                            src="/logo.png"
-                            alt="Center for AI-IoT Innovation"
-                            className="h-14 w-15 md:h-20 md:w-20 object-cover rounded-full"
+                                src="/logo.png"
+                                alt="Center for AI-IoT Innovation"
+                                className="h-14 w-15 md:h-20 md:w-20 object-cover rounded-full"
                             />
                             <div>
                                 <h4 className="font-bold text-lg mb-1">Center for AI-IOT Innovation</h4>

@@ -4,7 +4,8 @@ import {
   Bell, Clock, MapPin, Phone, Mail,
   CloudRain, Droplets, Thermometer, Activity,
   BarChart2, Calendar, RefreshCw, Wifi,
-  AlertTriangle, CheckCircle, Maximize, Minimize, Layers, Anchor
+  AlertTriangle, CheckCircle, Maximize, Minimize, Layers, Anchor,
+  MessageSquare, Radio, Send, X
 } from 'lucide-react';
 
 const DDMADashboard = () => {
@@ -14,60 +15,34 @@ const DDMADashboard = () => {
   // --- RAIN GAUGE STATE (LIVE) ---
   const [viewMode, setViewMode] = useState('live');
 
+  // --- BROADCAST STATE (NEW FEATURE) ---
+  const [broadcastState, setBroadcastState] = useState('idle'); // idle | composing | sending | success
+  const [broadcastMessage, setBroadcastMessage] = useState('⚠️ KSDMA ALERT: River levels in Periyar basin are rising. Expected to cross warning levels in 6 hours. Please avoid river banks and low-lying areas.');
+
   // --- REAL-TIME DRY SEASON DATA (FEB 2026) ---
   const [activeStation, setActiveStation] = useState('Kalady');
   const [stations, setStations] = useState({
-    Ayyampuzha: {
-      intensity: 0.0,
-      accumulated: 0.0,
-      temp: 34.2,
-      humidity: 62,
-      soilMoisture: 35,
-      liveData: Array(20).fill(0)
-    },
-    Malayattoor: {
-      intensity: 0.0,
-      accumulated: 0.0,
-      temp: 33.8,
-      humidity: 65,
-      soilMoisture: 38,
-      liveData: Array(20).fill(0)
-    },
-    Kalady: {
-      intensity: 0.0,
-      accumulated: 0.0,
-      temp: 34.5,
-      humidity: 60,
-      soilMoisture: 32,
-      liveData: Array(20).fill(0)
-    }
+    Ayyampuzha: { intensity: 0.0, accumulated: 0.0, temp: 34.2, humidity: 62, soilMoisture: 35, liveData: Array(20).fill(0) },
+    Malayattoor: { intensity: 0.0, accumulated: 0.0, temp: 33.8, humidity: 65, soilMoisture: 38, liveData: Array(20).fill(0) },
+    Kalady: { intensity: 0.0, accumulated: 0.0, temp: 34.5, humidity: 60, soilMoisture: 32, liveData: Array(20).fill(0) }
   });
 
-  // --- HISTORY VIEW STATE ---
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [historyData, setHistoryData] = useState([]);
-
-  // --- MAP STATE ---
   const [isMapFullscreen, setIsMapFullscreen] = useState(false);
-  const [mapLayers, setMapLayers] = useState({
-    arg: true,
-    river: true,
-    dam: true
-  });
+  const [mapLayers, setMapLayers] = useState({ arg: true, river: true, dam: true });
 
-  // Clock Timer
+  // Timers
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // 1. Live Simulation Timer
   useEffect(() => {
     const simulation = setInterval(() => {
       setStations(prev => {
         const current = prev[activeStation];
         const newIntensity = Math.random() > 0.95 ? 0.1 : 0.0;
-
         return {
           ...prev,
           [activeStation]: {
@@ -85,37 +60,26 @@ const DDMADashboard = () => {
     return () => clearInterval(simulation);
   }, [activeStation]);
 
-  // 2. Historical Data Generator
   useEffect(() => {
-    const generatedHistory = Array.from({ length: 24 }, (_, i) => ({
-      hour: i,
-      rain: '0.0',
-      status: 'Normal'
-    }));
+    const generatedHistory = Array.from({ length: 24 }, (_, i) => ({ hour: i, rain: '0.0', status: 'Normal' }));
     setHistoryData(generatedHistory);
   }, [selectedDate]);
 
-  const toggleLayer = (layer) => {
-    setMapLayers(prev => ({ ...prev, [layer]: !prev[layer] }));
-  };
+  const toggleLayer = (layer) => setMapLayers(prev => ({ ...prev, [layer]: !prev[layer] }));
+  const formatTime = (date) => date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+  const formatDate = (date) => date.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-  };
-
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  // Broadcast Handler
+  const handleSendBroadcast = () => {
+    setBroadcastState('sending');
+    setTimeout(() => {
+      setBroadcastState('success');
+    }, 2000); // Simulate API call
   };
 
   const renderLiveGraph = (data) => {
-    const height = 60;
-    const width = 100;
-    const maxVal = Math.max(...data, 1);
-    const points = data.map((val, i) => {
-      const x = (i / (data.length - 1)) * width;
-      const y = height - ((val / maxVal) * height);
-      return `${x},${y}`;
-    }).join(' ');
+    const height = 60; const width = 100; const maxVal = Math.max(...data, 1);
+    const points = data.map((val, i) => `${(i / (data.length - 1)) * width},${height - ((val / maxVal) * height)}`).join(' ');
     const areaPoints = `0,${height} ${points} ${width},${height}`;
 
     return (
@@ -134,7 +98,98 @@ const DDMADashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans flex flex-col">
+    <div className="min-h-screen bg-gray-50 font-sans flex flex-col relative">
+      
+      {/* --- NEW FEATURE: EMERGENCY BROADCAST MODAL --- */}
+      {broadcastState !== 'idle' && (
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
+            
+            {/* Header */}
+            <div className="bg-red-600 px-6 py-4 flex justify-between items-center text-white">
+                <div className="flex items-center gap-3">
+                    <Radio className="animate-pulse" />
+                    <h2 className="font-black text-lg tracking-tight">Public Emergency Broadcast</h2>
+                </div>
+                {broadcastState === 'composing' && (
+                    <button onClick={() => setBroadcastState('idle')} className="hover:bg-red-700 p-1 rounded-full transition"><X size={20}/></button>
+                )}
+            </div>
+
+            {/* Content Area */}
+            <div className="p-6">
+                {broadcastState === 'composing' && (
+                    <div className="space-y-4">
+                        <div>
+                            <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Target Audience Area</label>
+                            <select className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg font-bold text-slate-700 focus:outline-none focus:border-red-500">
+                                <option>Ernakulam District (All)</option>
+                                <option>Periyar River Banks (Geofenced)</option>
+                                <option>Kalady & Malayattoor Panchayats</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-2">Warning Message (SMS & WhatsApp)</label>
+                            <textarea 
+                                rows="4" 
+                                value={broadcastMessage}
+                                onChange={(e) => setBroadcastMessage(e.target.value)}
+                                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg font-medium text-slate-800 focus:outline-none focus:border-red-500 resize-none"
+                            ></textarea>
+                            <p className="text-right text-[10px] text-slate-400 mt-1 font-bold">{broadcastMessage.length}/160 chars</p>
+                        </div>
+                        <div className="pt-4 border-t border-slate-100 flex justify-end gap-3">
+                            <button onClick={() => setBroadcastState('idle')} className="px-5 py-2.5 text-slate-500 font-bold hover:bg-slate-100 rounded-lg transition">Cancel</button>
+                            <button onClick={handleSendBroadcast} className="px-6 py-2.5 bg-red-600 text-white font-black rounded-lg shadow-md hover:bg-red-700 hover:shadow-lg transition flex items-center gap-2">
+                                <Send size={16} /> Transmit Alert
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {broadcastState === 'sending' && (
+                    <div className="py-12 flex flex-col items-center justify-center text-center">
+                        <div className="w-16 h-16 border-4 border-red-200 border-t-red-600 rounded-full animate-spin mb-4"></div>
+                        <h3 className="font-black text-slate-800 text-lg">Broadcasting Warning...</h3>
+                        <p className="text-slate-500 text-sm font-medium mt-2">Pinging telecom providers in Ernakulam limits</p>
+                    </div>
+                )}
+
+                {broadcastState === 'success' && (
+                    <div className="py-8 flex flex-col items-center justify-center">
+                        <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                            <CheckCircle size={32} />
+                        </div>
+                        <h3 className="font-black text-slate-800 text-xl mb-1">Alert Sent Successfully</h3>
+                        <p className="text-slate-500 text-sm font-medium mb-8">Dispatched to 142,593 devices in target zone.</p>
+                        
+                        {/* Fake Mobile Phone Mockup */}
+                        <div className="w-64 bg-gray-900 p-2 rounded-[2rem] shadow-xl border-4 border-gray-800 relative">
+                            {/* Phone Notch */}
+                            <div className="absolute top-0 inset-x-0 h-4 bg-gray-900 rounded-b-xl w-1/2 mx-auto z-10"></div>
+                            <div className="bg-gray-100 h-80 rounded-[1.5rem] overflow-hidden flex flex-col">
+                                <div className="bg-gray-200/50 py-3 text-center border-b border-gray-300 relative">
+                                    <span className="text-[10px] font-bold text-gray-800">Messages</span>
+                                </div>
+                                <div className="flex-1 p-3 flex flex-col justify-end bg-white">
+                                    <div className="bg-green-500 text-white p-3 rounded-2xl rounded-br-sm text-[11px] shadow-sm ml-4 mb-2">
+                                        {broadcastMessage}
+                                    </div>
+                                    <span className="text-[8px] text-gray-400 text-right mr-1">Delivered Just Now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onClick={() => setBroadcastState('idle')} className="mt-8 px-6 py-2.5 bg-slate-800 text-white font-black rounded-lg hover:bg-slate-900 transition">
+                            Close & Return to Dashboard
+                        </button>
+                    </div>
+                )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Info Bar */}
       <div className="bg-slate-900 text-slate-200 text-xs py-2 px-4 hidden md:block border-b border-slate-800">
         <div className="container mx-auto flex flex-wrap justify-between items-center gap-2">
@@ -207,7 +262,7 @@ const DDMADashboard = () => {
 
       <main className="flex-1 container mx-auto py-6 px-4 md:px-6 max-w-7xl">
 
-        {/* GREEN NORMAL Alert Banner */}
+        {/* --- MODIFIED: Alert Banner with Broadcast Button --- */}
         <div className="bg-white border border-green-200 rounded-xl shadow-sm mb-6 overflow-hidden">
           <div className="bg-gradient-to-r from-green-50 to-white px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="flex items-start gap-3">
@@ -219,9 +274,13 @@ const DDMADashboard = () => {
                 <p className="text-xs md:text-sm text-green-700 mt-1 font-medium">No active rainfall or flood alerts. River levels are stable and reservoir inflows are minimal. Continuous monitoring active.</p>
               </div>
             </div>
-            {/* <button className="text-xs font-bold bg-green-100 text-green-700 px-4 py-2 rounded-lg hover:bg-green-200 transition-colors whitespace-nowrap border border-green-200">
-              View Protocols
-            </button> */}
+            {/* The WOW Factor Broadcast Button */}
+            <button 
+                onClick={() => setBroadcastState('composing')}
+                className="w-full md:w-auto text-xs font-black bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 shadow-[0_0_10px_rgba(220,38,38,0.4)] transition-all flex items-center justify-center gap-2 uppercase tracking-widest border border-red-500 animate-pulse hover:animate-none"
+            >
+              <Radio size={16} /> Broadcast Early Warning
+            </button>
           </div>
         </div>
 

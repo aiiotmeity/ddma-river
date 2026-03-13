@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Bell, Clock, MapPin, Phone, Mail, Droplets,
-    ExternalLink, Activity, Anchor, Navigation, ShieldAlert, CheckCircle, Lock
+    ExternalLink, Activity, Anchor, Navigation, ShieldAlert, CheckCircle, Lock, Video, AlertCircle
 } from 'lucide-react';
 
 const BhoothankettDashboard = () => {
@@ -169,34 +169,24 @@ const BhoothankettDashboard = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left: READ ONLY Visualizer */}
                     <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col relative">
-                        {/* Lock Overlay indicating read-only */}
-
-
                         <div className="bg-slate-50 px-6 py-4 border-b border-slate-200">
                             <h3 className="text-sm font-black text-slate-800 uppercase tracking-wide">Live Barrage Status</h3>
                         </div>
 
                         <div className="p-6 flex-1 flex flex-col justify-center">
-                            {/* <div className="mb-8 bg-blue-50/50 p-6 rounded-xl border border-blue-100 text-center">
-                                <label className="block text-[10px] font-black text-blue-600 uppercase tracking-widest mb-2">Verified Telemetry Water Level</label>
-                                <div className="text-4xl font-black text-blue-900">
-                                    {waterLevel} <span className="text-xl text-blue-400">m</span>
-                                </div>
-                            </div> */}
-
                             <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Live Shutter Configuration (1-15)</label>
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                                 {gates.map((isOpen, index) => (
                                     <div
                                         key={index}
-                                        className={`flex flex-col items-center justify-center py-4 rounded-xl border-2 ${isOpen
-                                            ? 'bg-blue-50 border-blue-400 text-blue-700 shadow-inner'
+                                        className={`flex flex-col items-center justify-center py-4 rounded-xl border-2 transition-all ${isOpen
+                                            ? 'bg-blue-50 border-blue-400 text-blue-700 shadow-inner scale-105'
                                             : 'bg-slate-50 border-slate-100 text-slate-400'
                                             }`}
                                     >
                                         <span className="text-[10px] font-black uppercase tracking-widest mb-1.5">S{index + 1}</span>
                                         {isOpen ? (
-                                            <span className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded uppercase font-bold tracking-wider">Open</span>
+                                            <span className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded uppercase font-bold tracking-wider animate-pulse">Open</span>
                                         ) : (
                                             <span className="bg-slate-200 text-slate-500 text-[9px] px-2 py-0.5 rounded uppercase font-bold tracking-wider">Closed</span>
                                         )}
@@ -206,19 +196,54 @@ const BhoothankettDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Right: Activity & Map */}
+                    {/* Right: Activity, Map & CCTV */}
                     <div className="space-y-6 flex flex-col">
 
+                        {/* --- NEW FEATURE: LIVE CCTV FEED SIMULATION --- */}
+                        <div className="bg-slate-900 rounded-2xl shadow-lg border border-slate-800 overflow-hidden relative group">
+                            <div className="p-3 bg-black/50 border-b border-slate-800 flex justify-between items-center absolute w-full z-20 top-0">
+                                <h3 className="text-[10px] font-black text-slate-300 uppercase tracking-widest flex items-center gap-2">
+                                    <Video size={14} className="text-red-500" /> CAM-04: Spillway Top
+                                </h3>
+                                <div className="flex items-center gap-1.5 bg-red-500/20 px-2 py-0.5 rounded border border-red-500/50">
+                                    <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_5px_rgba(239,68,68,0.8)]"></div>
+                                    <span className="text-[8px] font-black text-red-400 tracking-wider">LIVE REC</span>
+                                </div>
+                            </div>
+                            
+                            <div className="relative aspect-video bg-black w-full overflow-hidden">
+                                {/* Simulated Video Feed - Auto plays, loops, and has no sound */}
+                                {/* If you have a local dam video, change src to "/dam-video.mp4" */}
+                                <video 
+                                    src="/dam.mp4" 
+                                    autoPlay 
+                                    loop 
+                                    muted 
+                                    playsInline
+                                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                />
+                                
+                                {/* CCTV Overlays to make it look authentic */}
+                                <div className="absolute inset-0 border-4 border-slate-800/50 pointer-events-none"></div>
+                                {/* Crosshairs */}
+                                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-30">
+                                    <div className="w-8 h-px bg-white/70 absolute top-1/2 -translate-y-1/2 -left-4"></div>
+                                    <div className="w-px h-8 bg-white/70 absolute left-1/2 -translate-x-1/2 -top-4"></div>
+                                    <div className="w-8 h-8 border border-white/50 rounded-full"></div>
+                                </div>
+                                {/* Bottom Timestamp Overlay */}
+                                <div className="absolute bottom-2 left-3 font-mono text-[10px] text-white/80 drop-shadow-md z-20">
+                                    {formatDate(currentTime).toUpperCase()} {formatTime(currentTime)}
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Map View */}
-                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex-1 min-h-[250px] flex flex-col">
+                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex-1 min-h-[200px] flex flex-col">
                             <div className="p-4 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
                                 <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
                                     <Navigation size={14} className="text-blue-600" /> Geospatial Location
                                 </h3>
-                                <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded border border-slate-200 shadow-sm">
-                                    <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_5px_rgba(16,185,129,0.5)]"></div>
-                                    <span className="text-[9px] font-black text-emerald-700 tracking-wider">GPS ACTIVE</span>
-                                </div>
                             </div>
                             <div className="flex-1 w-full bg-slate-200 relative">
                                 <iframe
