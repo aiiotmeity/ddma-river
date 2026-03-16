@@ -218,10 +218,7 @@ const DataEntry = () => {
                                 <FileText size={18} />
                                 Export Reports
                             </button>
-                            <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-lg font-bold transition-colors">
-                                <Settings size={18} />
-                                Calibration
-                            </button>
+                            
                         </nav>
                     </div>
                 </aside>

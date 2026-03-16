@@ -173,14 +173,14 @@ const BhoothankettDashboard = () => {
                             <h3 className="text-sm font-black text-slate-800 uppercase tracking-wide">Live Barrage Status</h3>
                         </div>
 
-                        <div className="p-6 flex-1 flex flex-col justify-center">
-                            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Live Shutter Configuration (1-15)</label>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                        <div className="p-6 flex flex-col">
+                            <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Live Shutter Configuration (1-15)</label>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                                 {gates.map((isOpen, index) => (
                                     <div
                                         key={index}
-                                        className={`flex flex-col items-center justify-center py-4 rounded-xl border-2 transition-all ${isOpen
-                                            ? 'bg-blue-50 border-blue-400 text-blue-700 shadow-inner scale-105'
+                                        className={`flex flex-col items-center justify-center py-3 rounded-xl border-2 transition-all ${isOpen
+                                            ? 'bg-blue-50 border-blue-400 text-blue-700 shadow-inner'
                                             : 'bg-slate-50 border-slate-100 text-slate-400'
                                             }`}
                                     >

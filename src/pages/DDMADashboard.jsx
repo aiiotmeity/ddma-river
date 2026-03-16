@@ -161,7 +161,7 @@ const DDMADashboard = () => {
                             <CheckCircle size={32} />
                         </div>
                         <h3 className="font-black text-slate-800 text-xl mb-1">Alert Sent Successfully</h3>
-                        <p className="text-slate-500 text-sm font-medium mb-8">Dispatched to 142,593 devices in target zone.</p>
+                        {/* <p className="text-slate-500 text-sm font-medium mb-8">Dispatched to 142,593 devices in target zone.</p> */}
                         
                         {/* Fake Mobile Phone Mockup */}
                         <div className="w-64 bg-gray-900 p-2 rounded-[2rem] shadow-xl border-4 border-gray-800 relative">
