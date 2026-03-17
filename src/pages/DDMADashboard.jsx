@@ -219,11 +219,10 @@ const DDMADashboard = () => {
 
       {/* Main Header Section */}
       <div className="bg-gradient-to-r from-blue-900 to-slate-800 text-white shadow-xl overflow-hidden relative">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
         <div className="container mx-auto py-4 md:py-6 px-4 md:px-6 flex justify-between items-center relative z-10">
           <div className="flex items-center gap-4 md:gap-5">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-2 md:p-3 shadow-inner flex items-center justify-center">
-              <img src="/logo.png" alt="Gov Logo" className="h-8 w-8 md:h-12 md:w-12 object-contain" onError={(e) => e.target.style.display = 'none'} />
+            <div className="bg-white rounded-full p-1 md:p-2 shadow-sm flex items-center justify-center">
+              <img src="/logo.png" alt="Gov Logo" className="h-8 w-8 md:h-12 md:w-12 rounded-full object-cover" onError={(e) => e.target.style.display = 'none'} />
             </div>
             <div>
               <h1 className="text-lg md:text-2xl lg:text-3xl font-black tracking-tight drop-shadow-sm">District Disaster Management Authority</h1>

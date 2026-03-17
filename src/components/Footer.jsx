@@ -12,7 +12,7 @@ const Footer = () => {
                             <img
                                 src="/logo.png"
                                 alt="Center for AI-IoT Innovation"
-                                className="h-14 w-15 md:h-20 md:w-20 object-cover rounded-full"
+                                className="h-14 w-14 md:h-20 md:w-20 object-cover rounded-full"
                             />
                             <div>
                                 <h4 className="font-bold text-lg mb-1">Center for AI-IOT Innovation</h4>
@@ -45,14 +45,14 @@ const Footer = () => {
 
                     {/* Important Links */}
                     <div>
-                        <h5 className="font-bold text-sm uppercase tracking-wider mb-4 border-b border-blue-700 pb-2">Important Links</h5>
+                        <h5 className="font-bold text-sm uppercase tracking-wider mb-4 border-b border-blue-700 pb-2">Links</h5>
                         <ul className="space-y-2 text-sm opacity-80">
 
-                            <li><a href="#" className="hover:text-white hover:underline transition-colors">India Meteorological Dept</a></li>
-                            <li><a href="#" className="hover:text-white hover:underline transition-colors">Central Water Commission</a></li>
-                            <li><a href="#" className="hover:text-white hover:underline transition-colors">NDMA</a></li>
-                            <li><a href="#" className="hover:text-white hover:underline transition-colors">Kerala SDMA</a></li>
-                            <li><a href="#" className="hover:text-white hover:underline transition-colors">Digital India</a></li>
+                            <li><a href="#" className="hover:text-white hover:underline transition-colors">About Us</a></li>
+                            <li><a href="#" className="hover:text-white hover:underline transition-colors">About Project</a></li>
+                            <li><a href="#" className="hover:text-white hover:underline transition-colors">FAQ</a></li>
+                            <li><a href="#" className="hover:text-white hover:underline transition-colors">Health Guidelines</a></li>
+                            <li><a href="#" className="hover:text-white hover:underline transition-colors">Help / Support</a></li>
                         </ul>
                     </div>
                 </div>

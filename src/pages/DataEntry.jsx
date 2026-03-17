@@ -159,8 +159,8 @@ const DataEntry = () => {
             <div className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-20">
                 <div className="container mx-auto py-3 px-6 flex justify-between items-center">
                     <div className="flex items-center gap-4">
-                        <div className="bg-slate-100 p-2 rounded-lg border border-slate-200">
-                            <img src="/logo.png" className="h-10 w-10 object-contain" alt="Kerala Gov Logo" onError={(e) => e.target.style.display = 'none'} />
+                        <div className="bg-slate-100 p-2 rounded-full border border-slate-200">
+                            <img src="/logo.png" className="h-10 w-10 rounded-full object-cover" alt="Kerala Gov Logo" onError={(e) => e.target.style.display = 'none'} />
                         </div>
                         <div>
                             <h1 className="text-xl font-black text-slate-800 tracking-tight">Bhoothathankettu Barrage</h1>

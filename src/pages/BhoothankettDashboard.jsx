@@ -59,13 +59,12 @@ const BhoothankettDashboard = () => {
 
             {/* Main Header Section */}
             <div className="bg-gradient-to-r from-blue-900 to-slate-800 text-white shadow-xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
                 <div className="container mx-auto py-4 md:py-6 px-4 md:px-6 flex justify-between items-center relative z-10">
                     <div className="flex items-center gap-4 md:gap-5">
-                        <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-2 md:p-3 shadow-inner">
+                        <div className="bg-white rounded-full p-1 md:p-2 shadow-sm flex items-center justify-center">
                             <img
                                 src="/logo.png"
-                                className="h-10 w-10 md:h-14 md:w-14 object-contain drop-shadow-lg"
+                                className="h-10 w-10 md:h-14 md:w-14 rounded-full object-cover"
                                 alt="Kerala Gov Logo"
                                 onError={(e) => e.target.style.display = 'none'}
                             />

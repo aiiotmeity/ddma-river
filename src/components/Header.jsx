@@ -67,7 +67,7 @@ const Header = () => {
                                 <img
                                     src="/logo.png"
                                     alt="Center for AI-IoT Innovation"
-                                    className="h-8 w-8 md:h-12 md:w-12 object-contain"
+                                    className="h-8 w-8 md:h-12 md:w-12 rounded-full object-cover"
                                 />
                             </div>
                         <div className="border-l-2 border-blue-700 pl-3 md:pl-5">
