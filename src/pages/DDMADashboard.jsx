@@ -22,9 +22,9 @@ const DDMADashboard = () => {
   // --- REAL-TIME DRY SEASON DATA (FEB 2026) ---
   const [activeStation, setActiveStation] = useState('Kalady');
   const [stations, setStations] = useState({
-    Ayyampuzha: { intensity: 0.0, accumulated: 0.0, temp: 34.2, humidity: 62, soilMoisture: 35, liveData: Array(20).fill(0) },
-    Malayattoor: { intensity: 0.0, accumulated: 0.0, temp: 33.8, humidity: 65, soilMoisture: 38, liveData: Array(20).fill(0) },
-    Kalady: { intensity: 0.0, accumulated: 0.0, temp: 34.5, humidity: 60, soilMoisture: 32, liveData: Array(20).fill(0) }
+    Ayyampuzha: { intensity: 2.4, accumulated: 15.2, temp: 30.5, humidity: 72, soilMoisture: 35, liveData: Array(20).fill(2.4) },
+    Malayattoor: { intensity: 1.8, accumulated: 12.4, temp: 31.0, humidity: 70, soilMoisture: 33, liveData: Array(20).fill(1.8) },
+    Kalady: { intensity: 3.0, accumulated: 18.6, temp: 29.2, humidity: 68, soilMoisture: 34, liveData: Array(20).fill(3.0) }
   });
 
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -42,21 +42,21 @@ const DDMADashboard = () => {
     const simulation = setInterval(() => {
       setStations(prev => {
         const current = prev[activeStation];
-        const newIntensity = Math.random() > 0.95 ? 0.1 : 0.0;
+        const newIntensity = parseFloat((Math.random() * 12).toFixed(1));
         return {
           ...prev,
           [activeStation]: {
             ...current,
-            intensity: parseFloat(newIntensity.toFixed(1)),
-            accumulated: parseFloat((current.accumulated + (newIntensity / 1200)).toFixed(2)),
-            temp: parseFloat((34 + (Math.random() * 0.5 - 0.25)).toFixed(1)),
-            humidity: Math.min(100, Math.max(50, current.humidity + (Math.random() * 1 - 0.5))),
-            soilMoisture: Math.max(20, current.soilMoisture - 0.01),
+            intensity: newIntensity,
+            accumulated: parseFloat((current.accumulated + newIntensity * 0.2).toFixed(1)),
+            temp: parseFloat((23 + Math.random() * 10).toFixed(1)),
+            humidity: Math.min(100, Math.max(40, current.humidity + (Math.random() * 3 - 1.5))),
+            soilMoisture: Math.min(60, Math.max(20, current.soilMoisture + (Math.random() * 2 - 1))),
             liveData: [...current.liveData.slice(1), newIntensity]
           }
         };
       });
-    }, 3000);
+    }, 15 * 60 * 1000); // update every 15 minutes
     return () => clearInterval(simulation);
   }, [activeStation]);
 
@@ -233,11 +233,14 @@ const DDMADashboard = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
             <button className="p-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full transition-all relative">
               <Bell size={18} />
             </button>
-            <button onClick={() => navigate('/login')} className="bg-red-500/90 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-xs md:text-sm transition-all shadow-md border border-red-400">
+            <button onClick={() => navigate('/login')} className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-2 rounded-lg font-bold text-xs md:text-sm transition-all shadow-md border border-sky-500">
+              Back to Login
+            </button>
+            <button onClick={() => navigate('/login')} className="bg-red-500/90 hover:bg-red-600 text-white px-3 py-2 rounded-lg font-bold text-xs md:text-sm transition-all shadow-md border border-red-400">
               Logout
             </button>
           </div>
@@ -252,9 +255,12 @@ const DDMADashboard = () => {
             <span className="hover:text-blue-700 flex items-center h-full px-1 cursor-pointer transition-colors">Alerts</span>
             <span className="hover:text-blue-700 flex items-center h-full px-1 cursor-pointer transition-colors hidden md:flex">Rainfall Network</span>
           </div>
-          <div className="text-xs text-gray-400 font-medium hidden md:flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500"></span>
-            System Online
+          <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/login')} className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1.5 rounded-md text-xs font-semibold">Back to Login</button>
+            <div className="text-xs text-gray-400 font-medium hidden md:flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500"></span>
+              System Online
+            </div>
           </div>
         </div>
       </nav>
@@ -642,6 +648,10 @@ const DDMADashboard = () => {
           </div>
         </div>
       </main>
+
+      <footer className="bg-slate-900 text-slate-200 text-center py-3 mt-2">
+        <p className="text-xs font-semibold">© 2026 Center for AI-IoT Innovations. All rights reserved.</p>
+      </footer>
     </div>
   );
 };

@@ -61,22 +61,8 @@ const Footer = () => {
             {/* Bottom Bar */}
             <div className="border-t border-blue-800" style={{ backgroundColor: '#0f172a' }}>
                 <div className="container mx-auto px-6 py-4">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                        <div className="opacity-70">
-                            <p>© 2025 Adi Shankara Institute of Engineering & Technology. All Rights Reserved.</p>
-
-                        </div>
-                        <div className="flex gap-6 opacity-80">
-                            <a href="#" className="hover:text-white hover:underline transition-colors">Contact Us</a>
-                            <span>|</span>
-                            <a href="#" className="hover:text-white hover:underline transition-colors">Sitemap</a>
-                            <span>|</span>
-                            <a href="#" className="hover:text-white hover:underline transition-colors">Disclaimer</a>
-                            <span>|</span>
-                            <a href="#" className="hover:text-white hover:underline transition-colors">Privacy Policy</a>
-                            <span>|</span>
-                            <a href="#" className="hover:text-white hover:underline transition-colors">Terms of Use</a>
-                        </div>
+                    <div className="text-center text-xs opacity-80">
+                        <p>© 2026 Center for AI-IoT Innovations. All rights reserved.</p>
                     </div>
                 </div>
             </div>

@@ -89,9 +89,14 @@ const BhoothankettDashboard = () => {
                             <p className="text-[10px] text-blue-300 uppercase tracking-widest font-bold">Operator ID</p>
                             <p className="text-sm font-black tracking-wide">BWD-8492</p>
                         </div>
-                        <button onClick={() => navigate('/login')} className="bg-red-500/90 hover:bg-red-600 border border-red-400 text-white px-4 py-2 rounded-lg font-bold text-xs md:text-sm transition-all shadow-md uppercase tracking-wider">
-                            Logout
-                        </button>
+                        <div className="flex gap-2">
+                            <button onClick={() => navigate('/login')} className="bg-sky-600 hover:bg-sky-700 border border-sky-500 text-white px-3 py-2 rounded-lg font-bold text-xs md:text-sm transition-all shadow-md uppercase tracking-wider">
+                                Back to Login
+                            </button>
+                            <button onClick={() => navigate('/login')} className="bg-red-500/90 hover:bg-red-600 border border-red-400 text-white px-3 py-2 rounded-lg font-bold text-xs md:text-sm transition-all shadow-md uppercase tracking-wider">
+                                Logout
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -279,6 +284,10 @@ const BhoothankettDashboard = () => {
                     </div>
                 </div>
             </main>
+
+            <footer className="bg-slate-900 text-slate-200 text-center py-3 mt-2">
+                <p className="text-xs font-semibold">© 2026 Center for AI-IoT Innovations. All rights reserved.</p>
+            </footer>
 
             <style jsx>{`
                 @keyframes shimmer {
